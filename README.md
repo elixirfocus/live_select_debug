@@ -1,19 +1,14 @@
 # LiveSelectDebug
 
-To start your Phoenix server:
+This sample project demonstrates a workaround for a bug-like behavior I am witnessing in LiveView 0.17.5 where when generating a new changeset did not fully reset the form as I wanted.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+If I have a LiveView with a form and have the user fill out the form multiple times, I will reset the changeset after processing a successful form submission. I want to have the form reset into its default state, but while using LiveView 0.17.5, I was not seeing this. This bug was particularly problematic for the client app's `select` input.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+The solution demoed here is all about creating a random id. I attach it to the form, and when the intent is a form reset, I make a new random id. This change significantly nudges the LiveView change tracking to rebuild the form.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Demo at: [lib/live_select_debug_web/live/demo_live.ex](https://github.com/elixirfocus/live_select_debug/blob/main/lib/live_select_debug_web/live/demo_live.ex)
 
-## Learn more
+Related Issue?: <https://github.com/phoenixframework/phoenix_live_view/issues/1783>
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+I have not actively back-tested previous LiveView versions to investigate. This demo is more about extracting and sharing a hack I did on a client project, whereas explained, it was much more about the select input being sticky.
+ 
