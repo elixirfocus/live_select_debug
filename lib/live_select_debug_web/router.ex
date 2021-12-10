@@ -17,8 +17,7 @@ defmodule LiveSelectDebugWeb.Router do
   scope "/", LiveSelectDebugWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-    live "/demo", DemoLive
+    live "/", DemoLive
   end
 
   # Other scopes may use custom stacks.
